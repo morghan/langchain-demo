@@ -68,7 +68,7 @@ def main():
         # VectorStore = FAISS.from_texts(chunks, embedding=embeddings)
 
         # Accept user questions/query
-        query = st.text_input("Ask questions about your PDF file or anything else:")
+        query = st.text_input("Ask questions about your PDF file:")
         # st.write(query)
 
         if query:
