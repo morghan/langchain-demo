@@ -13,7 +13,7 @@ import os
 
 # Sidebar contents
 with st.sidebar:
-    st.title("💬 LLM Chat App")
+    st.title(" 💬 LLM Chat App")
     st.markdown(
         """
     ## About
