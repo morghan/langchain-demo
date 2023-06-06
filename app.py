@@ -7,6 +7,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.callbacks import get_openai_callback
 import os
@@ -54,6 +55,8 @@ def main():
         st.write(f"{store_name}")
         # st.write(chunks)
 
+        VectorStore = None
+        embeddings = None
         if os.path.exists(f"{store_name}.pkl"):
             with open(f"{store_name}.pkl", "rb") as f:
                 VectorStore = pickle.load(f)
@@ -72,9 +75,9 @@ def main():
         # st.write(query)
 
         if query:
-            docs = VectorStore.similarity_search(query=query, k=3)
+            docs = VectorStore.similarity_search(query=query)
 
-            llm = OpenAI()
+            llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.2)
             chain = load_qa_chain(llm=llm, chain_type="stuff")
             with get_openai_callback() as cb:
                 response = chain.run(input_documents=docs, question=query)
